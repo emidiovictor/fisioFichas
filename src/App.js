@@ -1,25 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "semantic-ui-css/semantic.min.css";
+import { CustomSidebar } from "./pages/CustomSidebar";
+import {
+  Sidebar,
+  Segment,
+  Button,
+  Header,
+  Image,
+  Container
+} from "semantic-ui-react";
+import { Routes } from "./routes";
 
 function App() {
+  const [state, setState] = useState({
+    visible: true
+  });
+
+  const handleAnimationChange = () => setState({ visible: !state.visible });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Button onClick={handleAnimationChange}>Push</Button>
+      <Sidebar.Pushable as={Segment}>
+        <CustomSidebar {...state} />
+
+        <Sidebar.Pusher>
+          <Container>
+            <Segment basic>
+              <Routes />
+            </Segment>
+          </Container>
+        </Sidebar.Pusher>
+      </Sidebar.Pushable>
+    </>
   );
 }
 
